@@ -12,6 +12,7 @@ import {
   withStyles,
   CircularProgress,
 } from "@material-ui/core";
+import { useHistory } from "react-router";
 
 const styles = () => ({
   paper: {
@@ -37,6 +38,7 @@ function Results(props) {
     nominations,
     loading,
   } = props;
+  const history = useHistory();
 
   // store fields with values
   const enteredFields = [];
@@ -57,7 +59,7 @@ function Results(props) {
   const resultList =
     results &&
     results.map((result, key) => (
-      <ListItem key={key}>
+      <ListItem key={key} onClick={() => history.push(`/${result.imdbID}`)}>
         <ListItemAvatar>
           <Avatar variant="square" src={result.Poster} alt={result.Title} />
         </ListItemAvatar>
@@ -92,7 +94,7 @@ function Results(props) {
           <List dense>{resultList}</List>
         </>
       ) : (
-        <h4>Sorry, we couldn't find anything.</h4>
+        <h4>Sorry, we couldn't find anything for "{searchText}".</h4>
       )}
     </Paper>
   );
