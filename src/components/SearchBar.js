@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import {
   Paper,
   InputAdornment,
-  IconButton,
+  Button,
   TextField,
   withStyles,
 } from "@material-ui/core";
@@ -29,20 +29,21 @@ function SearchBar(props) {
   };
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={24}>
       Movie Title
       <br />
       <br />
       <form onSubmit={handleSubmit}>
         <TextField
+          color="secondary"
           fullWidth
           variant="outlined"
           InputProps={{
             endAdornment: (
               <InputAdornment position="end">
-                <IconButton type="submit">
+                <Button type="submit">
                   <SearchIcon />
-                </IconButton>
+                </Button>
               </InputAdornment>
             ),
           }}

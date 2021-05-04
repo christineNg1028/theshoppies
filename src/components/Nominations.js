@@ -7,15 +7,24 @@ import {
   ListItemAvatar,
   Avatar,
   ListItemText,
-  ListItemSecondaryAction,
-  Button,
+  Tooltip,
+  IconButton,
   withStyles,
 } from "@material-ui/core";
+import RemoveCircleOutlineIcon from "@material-ui/icons/RemoveCircleOutline";
 
 const styles = () => ({
   paper: {
     textAlign: "left",
     padding: 16,
+  },
+  button: {
+    color: "black",
+    "&:hover": {
+      color: "#f03a17",
+    },
+    transition: "all linear 200ms",
+    marginRight: 16,
   },
 });
 
@@ -24,6 +33,16 @@ function Nominations(props) {
 
   const nominationList = nominations.map((nomination, key) => (
     <ListItem key={key}>
+      <Tooltip title="Remove nominee">
+        <IconButton
+          style={{ background: "transparent" }}
+          className={classes.button}
+          size="small"
+          onClick={() => handleRemove(nomination)}
+        >
+          <RemoveCircleOutlineIcon />
+        </IconButton>
+      </Tooltip>
       <ListItemAvatar>
         <Avatar
           variant="square"
@@ -34,20 +53,11 @@ function Nominations(props) {
       <Grid xs={7}>
         <ListItemText primary={nomination.Title} secondary={nomination.Year} />
       </Grid>
-      <ListItemSecondaryAction>
-        <Button
-          variant="contained"
-          size="small"
-          onClick={() => handleRemove(nomination)}
-        >
-          Remove
-        </Button>
-      </ListItemSecondaryAction>
     </ListItem>
   ));
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={24}>
       <h4>Nominations</h4>
       <List dense>{nominationList}</List>
     </Paper>

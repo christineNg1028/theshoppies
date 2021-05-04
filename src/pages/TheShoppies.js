@@ -9,6 +9,7 @@ const styles = () => ({
   header: {
     width: "100%",
     textAlign: "left",
+    fontSize: 40,
   },
 });
 
@@ -60,7 +61,7 @@ class TheShoppies extends React.Component {
     return (
       <Container maxWidth="md">
         <Grid container spacing={2}>
-          <h1 className={classes.header}>The Shoppies</h1>
+          <h1 className={classes.header}>The Shoppies 🍿</h1>
           <Grid item xs={12}>
             <SearchBar handleSearch={this.handleSearch} />
           </Grid>

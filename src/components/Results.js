@@ -17,6 +17,14 @@ const styles = () => ({
     textAlign: "left",
     padding: 16,
   },
+  button: {
+    textTransform: "none",
+    backgroundColor: "#f03a17",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "black",
+    },
+  },
 });
 
 function Results(props) {
@@ -35,6 +43,7 @@ function Results(props) {
         </Grid>
         <ListItemSecondaryAction>
           <Button
+            className={classes.button}
             variant="contained"
             size="small"
             onClick={() => handleNominate(result)}
@@ -49,7 +58,7 @@ function Results(props) {
     ));
 
   return (
-    <Paper className={classes.paper}>
+    <Paper className={classes.paper} elevation={24}>
       {results ? (
         <h4>Results for "{search}"</h4>
       ) : (
