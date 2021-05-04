@@ -35,6 +35,7 @@ function Nominations(props) {
     <ListItem key={key}>
       <Tooltip title="Remove nominee">
         <IconButton
+          disableRipple
           style={{ background: "transparent" }}
           className={classes.button}
           size="small"

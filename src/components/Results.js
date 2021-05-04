@@ -10,6 +10,7 @@ import {
   ListItemSecondaryAction,
   Button,
   withStyles,
+  CircularProgress,
 } from "@material-ui/core";
 
 const styles = () => ({
@@ -28,7 +29,29 @@ const styles = () => ({
 });
 
 function Results(props) {
-  const { classes, results, search, handleNominate, nominations } = props;
+  const {
+    classes,
+    results,
+    search,
+    handleNominate,
+    nominations,
+    loading,
+  } = props;
+
+  // store fields with values
+  const enteredFields = [];
+  Object.values(search).forEach((field) => {
+    if (field) enteredFields.push(field);
+  });
+
+  // construct search text from fields with values
+  let searchText = "";
+  searchText = enteredFields.map((field, i) => {
+    return enteredFields[i + 1]
+      ? searchText + field + ", "
+      : searchText + field;
+  });
+
   const nominationIds = nominations.map(({ imdbID }) => imdbID);
 
   const resultList =
@@ -59,12 +82,18 @@ function Results(props) {
 
   return (
     <Paper className={classes.paper} elevation={24}>
-      {results ? (
-        <h4>Results for "{search}"</h4>
+      {loading ? (
+        <Grid container xs={12} justify="center">
+          <CircularProgress color="secondary" size={40} />
+        </Grid>
+      ) : results ? (
+        <>
+          <h4>Results for "{searchText}"</h4>
+          <List dense>{resultList}</List>
+        </>
       ) : (
-        <h4>Sorry, we couldn't find movies titled "{search}"</h4>
+        <h4>Sorry, we couldn't find anything.</h4>
       )}
-      <List dense>{resultList}</List>
     </Paper>
   );
 }

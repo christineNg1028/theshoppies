@@ -18,17 +18,30 @@ class TheShoppies extends React.Component {
     super(props);
     this.state = {
       results: [],
-      search: "",
+      title: "",
+      year: "",
+      type: "",
       nominations: [],
       open: false,
+      loading: false,
     };
   }
 
-  handleSearch = (search) => {
+  handleSearch = (title, year, type) => {
+    this.setState({ ...this.state, loading: true });
     axios
-      .get(`http://www.omdbapi.com/?s=${search}&apikey=8803b9a5`)
+      .get(
+        `http://www.omdbapi.com/?s=${title}&y=${year}&type=${type}&apikey=8803b9a5`
+      )
       .then(({ data }) => {
-        this.setState({ ...this.state, results: data.Search, search });
+        this.setState({
+          ...this.state,
+          results: data.Search,
+          title,
+          year,
+          type,
+          loading: false,
+        });
         console.log(this.state.results);
       })
       .catch((err) => console.log(err));
@@ -57,7 +70,17 @@ class TheShoppies extends React.Component {
 
   render() {
     const { classes } = this.props;
-    const { search, results, nominations, open } = this.state;
+    const {
+      title,
+      year,
+      type,
+      results,
+      nominations,
+      open,
+      loading,
+    } = this.state;
+    const search = { title, year, type };
+
     return (
       <Container maxWidth="md">
         <Grid container spacing={2}>
@@ -65,11 +88,12 @@ class TheShoppies extends React.Component {
           <Grid item xs={12}>
             <SearchBar handleSearch={this.handleSearch} />
           </Grid>
-          {search && (
+          {(title || year || type) && (
             <Grid item xs={6}>
               <Results
                 search={search}
                 results={results}
+                loading={loading}
                 handleNominate={this.handleNominate}
                 nominations={nominations}
               />
