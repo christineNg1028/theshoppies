@@ -27,6 +27,15 @@ const styles = () => ({
       backgroundColor: "black",
     },
   },
+  result: {
+    cursor: "pointer",
+    "&:hover": { backgroundColor: "#f1f3f4", borderRadius: 4 },
+    transition: "all linear 200ms",
+  },
+  readMore: {
+    fontSize: 12,
+    marginTop: -10,
+  },
 });
 
 function Results(props) {
@@ -59,7 +68,11 @@ function Results(props) {
   const resultList =
     results &&
     results.map((result, key) => (
-      <ListItem key={key} onClick={() => history.push(`/${result.imdbID}`)}>
+      <ListItem
+        className={classes.result}
+        key={key}
+        onClick={() => history.push(`/${result.imdbID}`)}
+      >
         <ListItemAvatar>
           <Avatar variant="square" src={result.Poster} alt={result.Title} />
         </ListItemAvatar>
@@ -91,6 +104,7 @@ function Results(props) {
       ) : results ? (
         <>
           <h4>Results for "{searchText}"</h4>
+          <p className={classes.readMore}>Click on a movie to read more.</p>
           <List dense>{resultList}</List>
         </>
       ) : (
