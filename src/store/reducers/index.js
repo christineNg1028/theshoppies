@@ -6,6 +6,9 @@ import {
 import { combineReducers } from "redux";
 
 const initialState = {
+  title: "",
+  year: "",
+  type: "",
   results: [],
   nominations: [],
 };
@@ -13,8 +16,11 @@ const initialState = {
 function theShoppiesReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_SEARCH_RESULTS:
-      const results = action.results;
-      return { ...state, results };
+      const title = action.payload.title;
+      const year = action.payload.year;
+      const type = action.payload.type;
+      const results = action.payload.results;
+      return { ...state, title, year, type, results };
     case ADD_NOMINEE:
       return { ...state, nominations: [...state.nominations, action.movie] };
     case REMOVE_NOMINEE:

@@ -6,9 +6,6 @@ import {
   Paper,
   withStyles,
 } from "@material-ui/core";
-import SearchBar from "../components/SearchBar";
-import Results from "../components/Results";
-import Nominations from "../components/Nominations";
 import axios from "axios";
 import { useParams } from "react-router";
 
@@ -53,7 +50,7 @@ function Movie(props) {
         console.log(data);
       })
       .catch((err) => console.log(err));
-  }, []);
+  }, [id]);
 
   return (
     <Container maxWidth="lg" className={classes.container}>

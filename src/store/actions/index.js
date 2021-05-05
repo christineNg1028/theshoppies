@@ -2,10 +2,10 @@ import axios from "axios";
 
 import * as types from "./types";
 
-export function fetchSearchResults(results) {
+export function fetchSearchResults(title, year, type, results) {
   return {
     type: types.FETCH_SEARCH_RESULTS,
-    results,
+    payload: { title, year, type, results },
   };
 }
 
@@ -17,7 +17,7 @@ export function fetchSearchResultsAsync(title, year, type) {
       )
       .then(({ data }) => {
         const results = data.Search;
-        dispatch(fetchSearchResults(results));
+        dispatch(fetchSearchResults(title, year, type, results));
       })
       .catch((err) => console.log(err));
   };

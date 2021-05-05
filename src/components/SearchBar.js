@@ -39,10 +39,10 @@ const styles = (theme) => ({
 });
 
 function SearchBar(props) {
-  const { classes, handleSearch } = props;
-  const [title, setTitle] = useState("");
-  const [type, setType] = useState("");
-  const [year, setYear] = useState("");
+  const { classes, handleSearch, search } = props;
+  const [title, setTitle] = useState(search.title);
+  const [type, setType] = useState(search.type);
+  const [year, setYear] = useState(search.year);
 
   const handleTitle = (e) => {
     setTitle(e.target.value);
