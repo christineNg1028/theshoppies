@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {
   Paper,
   InputAdornment,
+  IconButton,
   Button,
   TextField,
   Grid,
@@ -12,6 +13,7 @@ import {
   withStyles,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
+import HighlightOffIcon from "@material-ui/icons/HighlightOff";
 
 const styles = (theme) => ({
   paper: {
@@ -25,6 +27,12 @@ const styles = (theme) => ({
     color: "black",
     "&:hover": {
       color: "#f03a17",
+    },
+    transition: "all linear 200ms",
+  },
+  clearBtn: {
+    "&:hover": {
+      color: "black",
     },
     transition: "all linear 200ms",
   },
@@ -67,6 +75,24 @@ function SearchBar(props) {
               variant="outlined"
               placeholder="Title"
               onChange={handleTitle}
+              value={title}
+              InputProps={{
+                endAdornment: title ? (
+                  <InputAdornment position="end">
+                    <IconButton
+                      className={classes.clearBtn}
+                      size="small"
+                      disableRipple
+                      style={{ background: "transparent" }}
+                      onClick={() => setTitle("")}
+                    >
+                      <HighlightOffIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ) : (
+                  <></>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={3}>
@@ -76,6 +102,24 @@ function SearchBar(props) {
               variant="outlined"
               placeholder="Year of release"
               onChange={handleYear}
+              value={year}
+              InputProps={{
+                endAdornment: year ? (
+                  <InputAdornment position="end">
+                    <IconButton
+                      className={classes.clearBtn}
+                      size="small"
+                      disableRipple
+                      style={{ background: "transparent" }}
+                      onClick={() => setYear("")}
+                    >
+                      <HighlightOffIcon />
+                    </IconButton>
+                  </InputAdornment>
+                ) : (
+                  <></>
+                ),
+              }}
             />
           </Grid>
           <Grid item xs={2}>
