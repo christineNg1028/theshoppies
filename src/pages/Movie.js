@@ -131,24 +131,26 @@ function Movie(props) {
               <strong>Stars:</strong> {movie.Actors}
             </p>
             <br />
-            <Button
-              className={classes.button}
-              variant="contained"
-              size="large"
-              onClick={nominated ? handleRemove : handleNominate}
-            >
-              {nominated ? (
-                <>
-                  <PlaylistAddCheckIcon style={{ marginRight: 2 }} />
-                  Nominated
-                </>
-              ) : (
-                <>
-                  <PlaylistAddIcon style={{ marginRight: 2 }} />
-                  Nominate
-                </>
-              )}
-            </Button>
+            {(nominations.length !== 5 || nominated) && (
+              <Button
+                className={classes.button}
+                variant="contained"
+                size="large"
+                onClick={nominated ? handleRemove : handleNominate}
+              >
+                {nominated ? (
+                  <>
+                    <PlaylistAddCheckIcon style={{ marginRight: 2 }} />
+                    Nominated
+                  </>
+                ) : (
+                  <>
+                    <PlaylistAddIcon style={{ marginRight: 2 }} />
+                    Nominate
+                  </>
+                )}
+              </Button>
+            )}
           </Grid>
         </Grid>
       </Paper>
