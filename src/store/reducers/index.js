@@ -24,7 +24,9 @@ function theShoppiesReducer(state = initialState, action) {
     case ADD_NOMINEE:
       return { ...state, nominations: [...state.nominations, action.movie] };
     case REMOVE_NOMINEE:
-      const i = state.nominations.indexOf(action.movie);
+      const i = state.nominations.findIndex(
+        ({ imdbID }) => imdbID === action.movie.imdbID
+      );
       return {
         ...state,
         nominations: state.nominations

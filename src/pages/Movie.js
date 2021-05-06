@@ -4,6 +4,7 @@ import {
   Grid,
   Snackbar,
   Button,
+  IconButton,
   Paper,
   withStyles,
 } from "@material-ui/core";
@@ -13,6 +14,7 @@ import { connect } from "react-redux";
 import { addNominee, removeNominee } from "../store/actions";
 import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
 import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const styles = () => ({
   paper: {
@@ -52,10 +54,14 @@ const styles = () => ({
       fontWeight: "bold",
     },
   },
+  backBtn: {
+    color: "white",
+    marginBottom: 16,
+  },
 });
 
 function Movie(props) {
-  const { classes, nominations, addNominee, removeNominee } = props;
+  const { classes, nominations, addNominee, removeNominee, history } = props;
   const { id } = useParams();
   const [movie, setMovie] = useState({});
   const [open, setOpen] = useState(false);
@@ -84,6 +90,15 @@ function Movie(props) {
   return (
     <Container maxWidth="lg" className={classes.container}>
       <Paper className={classes.paper} elevation={24}>
+        <Grid container xs={12}>
+          <IconButton
+            className={classes.backBtn}
+            size="small"
+            onClick={() => history.push(`/`)}
+          >
+            <ArrowBackIcon />
+          </IconButton>
+        </Grid>
         <Grid container xs={12} spacing={2}>
           <Grid item xs={4}>
             <img src={movie.Poster} alt={movie.Title} />
