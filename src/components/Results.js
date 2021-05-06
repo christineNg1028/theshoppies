@@ -20,6 +20,7 @@ const styles = () => ({
     padding: 16,
   },
   button: {
+    width: 85,
     textTransform: "none",
     backgroundColor: "#f03a17",
     color: "white",
@@ -67,33 +68,34 @@ function Results(props) {
 
   const resultList =
     results &&
-    results.map((result, key) => (
-      <ListItem
-        className={classes.result}
-        key={key}
-        onClick={() => history.push(`/${result.imdbID}`)}
-      >
-        <ListItemAvatar>
-          <Avatar variant="square" src={result.Poster} alt={result.Title} />
-        </ListItemAvatar>
-        <Grid xs={7}>
-          <ListItemText primary={result.Title} secondary={result.Year} />
-        </Grid>
-        <ListItemSecondaryAction>
-          <Button
-            className={classes.button}
-            variant="contained"
-            size="small"
-            onClick={() => handleNominate(result)}
-            disabled={
-              nominationIds.includes(result.imdbID) || nominations.length === 5
-            }
-          >
-            Nominate
-          </Button>
-        </ListItemSecondaryAction>
-      </ListItem>
-    ));
+    results.map((result, key) => {
+      const nominated = nominationIds.includes(result.imdbID);
+      return (
+        <ListItem
+          className={classes.result}
+          key={key}
+          onClick={() => history.push(`/${result.imdbID}`)}
+        >
+          <ListItemAvatar>
+            <Avatar variant="square" src={result.Poster} alt={result.Title} />
+          </ListItemAvatar>
+          <Grid xs={7}>
+            <ListItemText primary={result.Title} secondary={result.Year} />
+          </Grid>
+          <ListItemSecondaryAction>
+            <Button
+              className={classes.button}
+              variant="contained"
+              size="small"
+              onClick={() => handleNominate(result)}
+              disabled={nominated || nominations.length === 5}
+            >
+              {nominated ? "Nominated" : "Nominate"}
+            </Button>
+          </ListItemSecondaryAction>
+        </ListItem>
+      );
+    });
 
   return (
     <Paper className={classes.paper} elevation={24}>

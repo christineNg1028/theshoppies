@@ -3,11 +3,16 @@ import {
   Container,
   Grid,
   Snackbar,
+  Button,
   Paper,
   withStyles,
 } from "@material-ui/core";
 import axios from "axios";
 import { useParams } from "react-router";
+import { connect } from "react-redux";
+import { addNominee, removeNominee } from "../store/actions";
+import PlaylistAddIcon from "@material-ui/icons/PlaylistAdd";
+import PlaylistAddCheckIcon from "@material-ui/icons/PlaylistAddCheck";
 
 const styles = () => ({
   paper: {
@@ -35,12 +40,27 @@ const styles = () => ({
   info: {
     marginTop: -10,
   },
+  button: {
+    width: 150,
+    textTransform: "none",
+    backgroundColor: "#f03a17",
+    border: "2px solid #f03a17",
+    color: "white",
+    "&:hover": {
+      backgroundColor: "transparent",
+      color: "#f03a17",
+      fontWeight: "bold",
+    },
+  },
 });
 
 function Movie(props) {
-  const { classes } = props;
+  const { classes, nominations, addNominee, removeNominee } = props;
   const { id } = useParams();
   const [movie, setMovie] = useState({});
+  const [open, setOpen] = useState(false);
+  const nominationIds = nominations.map(({ imdbID }) => imdbID);
+  const nominated = nominationIds.includes(id);
 
   useEffect(() => {
     axios
@@ -51,6 +71,15 @@ function Movie(props) {
       })
       .catch((err) => console.log(err));
   }, [id]);
+
+  const handleNominate = async () => {
+    await addNominee(movie);
+    setOpen(nominations.length === 4 ? true : false);
+  };
+
+  const handleRemove = () => {
+    removeNominee(movie);
+  };
 
   return (
     <Container maxWidth="lg" className={classes.container}>
@@ -86,11 +115,49 @@ function Movie(props) {
             <p>
               <strong>Stars:</strong> {movie.Actors}
             </p>
+            <br />
+            <Button
+              className={classes.button}
+              variant="contained"
+              size="large"
+              onClick={nominated ? handleRemove : handleNominate}
+            >
+              {nominated ? (
+                <>
+                  <PlaylistAddCheckIcon style={{ marginRight: 2 }} />
+                  Nominated
+                </>
+              ) : (
+                <>
+                  <PlaylistAddIcon style={{ marginRight: 2 }} />
+                  Nominate
+                </>
+              )}
+            </Button>
           </Grid>
         </Grid>
       </Paper>
+      <Snackbar
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "center",
+        }}
+        open={open}
+        message="You have nominated 5 movies!"
+        autoHideDuration={3000}
+        onClose={() => setOpen(false)}
+      />
     </Container>
   );
 }
 
-export default withStyles(styles)(Movie);
+function mapStateToProps(state) {
+  return {
+    nominations: state.theShoppies.nominations,
+  };
+}
+
+export default connect(mapStateToProps, {
+  addNominee,
+  removeNominee,
+})(withStyles(styles)(Movie));

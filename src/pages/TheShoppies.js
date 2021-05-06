@@ -3,7 +3,6 @@ import { Container, Grid, Snackbar, withStyles } from "@material-ui/core";
 import SearchBar from "../components/SearchBar";
 import Results from "../components/Results";
 import Nominations from "../components/Nominations";
-import axios from "axios";
 import { connect } from "react-redux";
 import {
   fetchSearchResultsAsync,
