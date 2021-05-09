@@ -94,7 +94,7 @@ function Movie(props) {
           <IconButton
             className={classes.backBtn}
             size="small"
-            onClick={() => history.push(`/`)}
+            onClick={() => history.push(`/theshoppies/`)}
           >
             <ArrowBackIcon />
           </IconButton>

@@ -74,7 +74,7 @@ function Results(props) {
         <ListItem
           className={classes.result}
           key={key}
-          onClick={() => history.push(`/${result.imdbID}`)}
+          onClick={() => history.push(`/theshoppies/${result.imdbID}`)}
         >
           <ListItemAvatar>
             <Avatar variant="square" src={result.Poster} alt={result.Title} />
