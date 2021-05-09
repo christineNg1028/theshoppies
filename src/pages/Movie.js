@@ -70,7 +70,7 @@ function Movie(props) {
 
   useEffect(() => {
     axios
-      .get(`http://www.omdbapi.com/?i=${id}&apikey=8803b9a5`)
+      .get(`https://www.omdbapi.com/?i=${id}&apikey=8803b9a5`)
       .then(({ data }) => {
         setMovie(data);
         console.log(data);
